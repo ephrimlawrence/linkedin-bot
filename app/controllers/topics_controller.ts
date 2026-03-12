@@ -2,6 +2,7 @@
 
 import UserTopic from "#models/user_topic";
 import { HttpContext } from "@adonisjs/core/http";
+import { createPost } from "../helpers/linkedin_api.ts";
 
 export default class TopicsController {
 	/**
@@ -68,12 +69,15 @@ export default class TopicsController {
 
 	async store({ request, auth, response, session }: HttpContext) {
 		const { topic } = request.all();
+		let t: UserTopic;
+
 		for (const name of topic) {
-			await UserTopic.create({ userId: auth.user?.id, name: name });
+			t = await UserTopic.create({ userId: auth.user?.id, name: name });
 		}
 
-		console.log(topic);
+		await createPost({ user: auth.user!, topic: t! });
 
+		// TODO: implement gemini API & linkedlin post
 		return response.json({ working: true });
 	}
 }

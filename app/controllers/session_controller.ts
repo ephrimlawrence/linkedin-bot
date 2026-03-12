@@ -2,6 +2,7 @@ import User from "#models/user";
 import env from "#start/env";
 import type { HttpContext } from "@adonisjs/core/http";
 import { randomUUID } from "crypto";
+import { getUserInfo } from "../helpers/linkedin_api.ts";
 
 /**
  * SessionController handles user authentication and session management.
@@ -14,10 +15,10 @@ export default class SessionController {
 	/**
 	 * Display the login page
 	 */
-	async create({ response }: HttpContext) {
+	async create({ response, session }: HttpContext) {
 		const state = randomUUID();
+		session.put("linkedin_auth_state", state);
 
-		await User.create({ state: state });
 		const url = encodeURI(
 			`https://www.linkedin.com/oauth/v2/authorization?client_id=${process.env.LINKEDIN_CLIENT_ID}&redirect_uri=${this.redirectUri}&state=${state}&response_type=code&scope=w_member_social`,
 		);
@@ -29,7 +30,13 @@ export default class SessionController {
 	 */
 	async store({ request, auth, response, session }: HttpContext) {
 		const { code, state } = request.all();
-		const user = await User.findByOrFail({ state: state });
+		const internalState = session.pull("linkedin_auth_state");
+
+		if (state !== internalState) {
+			return response.abort("Invalid session", 403);
+		}
+
+		// const user = await User.findByOrFail({ state: state });
 
 		const form = new URLSearchParams();
 		form.append("grant_type", "authorization_code");
@@ -49,6 +56,11 @@ export default class SessionController {
 			score: string;
 		};
 
+		const userInfo = await getUserInfo(data.access_token);
+		const user = (await User.findBy({ email: userInfo.email })) ?? new User();
+
+		user.email ??= userInfo.email;
+		user.fullName ??= userInfo.fullName;
 		user.accessToken = data.access_token;
 		await user.save();
 

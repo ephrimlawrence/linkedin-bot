@@ -38,16 +38,18 @@ export class UserTopicSchema extends BaseModel {
 }
 
 export class UserSchema extends BaseModel {
-  static $columns = ['accessToken', 'createdAt', 'id', 'state', 'updatedAt'] as const
+  static $columns = ['accessToken', 'createdAt', 'email', 'fullName', 'id', 'updatedAt'] as const
   $columns = UserSchema.$columns
   @column()
   declare accessToken: string | null
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
+  @column()
+  declare email: string | null
+  @column()
+  declare fullName: string | null
   @column({ isPrimary: true })
   declare id: number
-  @column()
-  declare state: string | null
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
 }

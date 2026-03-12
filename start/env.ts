@@ -28,4 +28,5 @@ export default await Env.create(new URL("../", import.meta.url), {
 	// Linkedinn
 	LINKEDIN_CLIEN_SECRET: Env.schema.secret(),
 	LINKEDIN_CLIENT_ID: Env.schema.string(),
+	GEMINI_API_KEY: Env.schema.string(),
 });
