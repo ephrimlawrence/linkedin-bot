@@ -8,7 +8,11 @@
     @end
 
     @form({ route: 'topics.store', method: 'POST' })
-      <div class="row">
+    <div class="row">
+    {{--  TODO: add days dropdown  --}}
+    </div>
+
+    <div class="row">
         @each(name in topics)
           <div class="col-md-4">
           <div class="form-check mr-3 my-2">
@@ -20,6 +24,7 @@
           </div>
         @end
       </div>
+
 
       <button type="submit" class="btn btn-primary text-center mt-4">Save Topics</button>
     @end

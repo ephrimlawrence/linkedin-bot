@@ -11,7 +11,7 @@ export default class extends BaseSchema {
 			// table.string("password").notNullable();
 			table.text("access_token");
 			table.text("linkedin_id");
-			// table.text("state");
+			table.bigInteger("token_expires_at").nullable();
 			table.timestamp("created_at").notNullable();
 			table.timestamp("updated_at").nullable();
 		});

@@ -10,6 +10,7 @@ export default class extends BaseSchema {
 			table.timestamp("created_at");
 			table.timestamp("updated_at");
 			table.text("name");
+			table.jsonb("days"); // array of days
 			table.integer("user_id").unsigned().notNullable();
 			table.foreign("user_id").references("users.id").onDelete("CASCADE");
 		});

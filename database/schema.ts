@@ -38,10 +38,12 @@ export class PostSchema extends BaseModel {
 }
 
 export class UserTopicSchema extends BaseModel {
-  static $columns = ['createdAt', 'id', 'name', 'updatedAt', 'userId'] as const
+  static $columns = ['createdAt', 'days', 'id', 'name', 'updatedAt', 'userId'] as const
   $columns = UserTopicSchema.$columns
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime | null
+  @column()
+  declare days: any | null
   @column({ isPrimary: true })
   declare id: number
   @column()
@@ -53,7 +55,7 @@ export class UserTopicSchema extends BaseModel {
 }
 
 export class UserSchema extends BaseModel {
-  static $columns = ['accessToken', 'createdAt', 'email', 'fullName', 'id', 'linkedinId', 'updatedAt'] as const
+  static $columns = ['accessToken', 'createdAt', 'email', 'fullName', 'id', 'linkedinId', 'tokenExpiresAt', 'updatedAt'] as const
   $columns = UserSchema.$columns
   @column()
   declare accessToken: string | null
@@ -67,6 +69,8 @@ export class UserSchema extends BaseModel {
   declare id: number
   @column()
   declare linkedinId: string | null
+  @column()
+  declare tokenExpiresAt: bigint | number | null
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
 }
