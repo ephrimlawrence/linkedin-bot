@@ -32,7 +32,6 @@ export default class SessionController {
 		const { code, state } = request.all();
 		const internalState = session.get("linkedin_auth_state");
 
-    console.log(code, state)
 		if (state !== internalState) {
 			return response.abort("Invalid session", 403);
 		}
@@ -56,7 +55,6 @@ export default class SessionController {
 		};
 
 		const userInfo = await getUserInfo(data.access_token);
-    console.log(userInfo)
 		const user = (await User.findBy({ email: userInfo.email })) ?? new User();
 
 		user.email ??= userInfo.email;

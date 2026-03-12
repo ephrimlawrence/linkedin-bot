@@ -31,7 +31,6 @@ export async function createPost(opts: { user: User; topic: UserTopic }) {
 			method: "POST",
 			headers: {
 				"x-goog-api-key": env.get("GEMINI_API_KEY"),
-
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
@@ -39,7 +38,7 @@ export async function createPost(opts: { user: User; topic: UserTopic }) {
 					{
 						parts: [
 							{
-								text: `Create a LinkedIn post on the topic '${opts.topic.name}'`,
+								text: `Create a post on the topic '${opts.topic.name}' that will be posted on LinkedIn. Must be concise and straight to the point. Add a bit of humor for engagement.`,
 							},
 						],
 					},
@@ -48,7 +47,10 @@ export async function createPost(opts: { user: User; topic: UserTopic }) {
 		},
 	);
 
-	console.log(await geminiResponse.json());
+	const geminiData = ((await geminiResponse.json()) as any).candidates[0]
+		.content.parts[0].text;
+
+	console.log(geminiData);
 
 	const response = await fetch("https://api.linkedin.com/rest/posts", {
 		method: "POST",
@@ -59,7 +61,7 @@ export async function createPost(opts: { user: User; topic: UserTopic }) {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({
-			author: "urn:li:organization:5515715",
+			// author: "urn:li:organization:5515715",
 			commentary: "Sample text Post",
 			visibility: "PUBLIC",
 			distribution: {
