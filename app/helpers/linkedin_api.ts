@@ -1,3 +1,4 @@
+import Post from "#models/post";
 import User from "#models/user";
 import UserTopic from "#models/user_topic";
 import env from "#start/env";
@@ -26,6 +27,8 @@ export async function getUserInfo(accessToken: string) {
 }
 
 export async function createPost(opts: { user: User; topic: UserTopic }) {
+	const { topic, user } = opts;
+
 	const geminiResponse = await fetch(
 		"https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent",
 		{
@@ -39,7 +42,7 @@ export async function createPost(opts: { user: User; topic: UserTopic }) {
 					{
 						parts: [
 							{
-								text: `Create a post on the topic '${opts.topic.name}' that will be posted on LinkedIn. Must be concise and straight to the point. Add a bit of humor for engagement. Do not use markdown formatting, return raw text + emoji (where appropriate)`,
+								text: `Create a post on the topic '${topic.name}' that will be posted on LinkedIn. Must be concise and straight to the point. Add a bit of humor for engagement. Do not use markdown formatting, return raw text + emoji (where appropriate)`,
 							},
 						],
 					},
@@ -48,22 +51,18 @@ export async function createPost(opts: { user: User; topic: UserTopic }) {
 		},
 	);
 
-	const postText = ((await geminiResponse.json()) as any).candidates[0]
-		.content.parts[0].text;
-
-	// console.log(geminiData);
+	const postText = ((await geminiResponse.json()) as any).candidates[0].content
+		.parts[0].text;
 
 	const response = await fetch("https://api.linkedin.com/rest/posts", {
 		method: "POST",
 		headers: {
-			Authorization: `Bearer ${opts.user.accessToken}`,
+			Authorization: `Bearer ${user.accessToken}`,
 			"X-Restli-Protocol-Version": "2.0.0",
 			"Linkedin-Version": "202601",
-			// "Content-Type": "application/json",
 		},
 		body: JSON.stringify({
-        "author": `urn:li:person:${opts.user.linkedinId}`,
-			// author: "urn:li:organization:5515715",
+			author: `urn:li:person:${user.linkedinId}`,
 			commentary: postText,
 			visibility: "PUBLIC",
 			distribution: {
@@ -76,7 +75,10 @@ export async function createPost(opts: { user: User; topic: UserTopic }) {
 		}),
 	});
 
-	const data = await response.text();
-	console.log(data);
-	return data;
+	const post = new Post();
+	post.content = postText;
+	post.topicId = topic.id;
+	await post.save();
+
+	return true;
 }
