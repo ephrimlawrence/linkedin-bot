@@ -148,7 +148,7 @@ main {
   margin-bottom: 48px;
   color: var(--gray-6);
 }
-form {
+/* form {
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -192,7 +192,7 @@ button {
 }
 button:hover {
   background: var(--gray-10);
-}
+} */
 
 /* Alerts */
 .alert {

@@ -11,7 +11,7 @@
     : undefined
 )
 @let(activeClass = request.url() === linkHref ? 'current' : '')
-@let(classes = [activeClass])
+@let(classes = [activeClass, "btn"])
 
 <a {{ $props
   .except(['href', 'text', 'route', 'routeParams', 'routeOptions'])

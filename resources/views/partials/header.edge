@@ -10,7 +10,7 @@
         @if(auth.user)
           @!avatar({ initials: auth.user.initials })
           @form({ route: 'session.destroy', method: 'POST' })
-            @!button({ text: 'Logout' })
+            @!button({ text: 'Logout', classes: 'btn btn-outline-secondary' })
           @end
         @else
           @!link({ route: 'new_account.create', text: 'Signup' })

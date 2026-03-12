@@ -7,24 +7,29 @@
 |
 */
 
-import { middleware } from '#start/kernel'
-import { controllers } from '#generated/controllers'
-import router from '@adonisjs/core/services/router'
+import { middleware } from "#start/kernel";
+import { controllers } from "#generated/controllers";
+import router from "@adonisjs/core/services/router";
 
-router.on('/').render('pages/home').as('home')
-
-router
-  .group(() => {
-    router.get('signup', [controllers.NewAccount, 'create'])
-    router.post('signup', [controllers.NewAccount, 'store'])
-
-    router.get('login', [controllers.Session, 'create'])
-    router.get('oauth-redirect', [controllers.Session, 'store'])
-  })
-  .use(middleware.guest())
+router.on("/").render("pages/home").as("home");
 
 router
-  .group(() => {
-    router.post('logout', [controllers.Session, 'destroy'])
-  })
-  .use(middleware.auth())
+	.group(() => {
+		router.get("signup", [controllers.NewAccount, "create"]);
+		router.post("signup", [controllers.NewAccount, "store"]);
+
+		router.get("login", [controllers.Session, "create"]);
+		router.get("oauth-redirect", [controllers.Session, "store"]);
+	})
+	.use(middleware.guest());
+
+router.group(() => {
+	router.get("topics", [controllers.Topics, "create"]);
+	router.post("topics", [controllers.Topics, "store"]);
+});
+
+router
+	.group(() => {
+		router.post("logout", [controllers.Session, "destroy"]);
+	})
+	.use(middleware.auth());

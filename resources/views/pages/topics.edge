@@ -1,0 +1,28 @@
+@layout()
+  <div class="hero">
+    <h1>Choose a Topic</h1>
+    <p>A super fast & simple LinkedIn bot for automated post </p>
+
+    @if(!auth.user)
+      @!link({ route: 'session.create', text: 'Login' })
+    @end
+
+    @form({ route: 'topics.store', method: 'POST' })
+      <div class="row">
+        @each(name in topics)
+          <div class="col-md-4">
+          <div class="form-check mr-3 my-2">
+            <input class="form-check-input" type="checkbox" value="{{ name }}" name="topic" id="check{{ name }}">
+            <label class="form-check-label" for="check{{ name }}">
+            {{ name }}
+            </label>
+          </div>
+          </div>
+        @end
+      </div>
+
+      <button type="submit" class="btn btn-primary text-center mt-4">Save Topics</button>
+    @end
+  @end
+
+@end
