@@ -20,7 +20,7 @@ export default class SessionController {
 		session.put("linkedin_auth_state", state);
 
 		const url = encodeURI(
-			`https://www.linkedin.com/oauth/v2/authorization?client_id=${process.env.LINKEDIN_CLIENT_ID}&redirect_uri=${this.redirectUri}&state=${state}&response_type=code&scope=w_member_social`,
+			`https://www.linkedin.com/oauth/v2/authorization?client_id=${process.env.LINKEDIN_CLIENT_ID}&redirect_uri=${this.redirectUri}&state=${state}&response_type=code&scope=openid profile email w_member_social`,
 		);
 		return response.redirect(url);
 	}
@@ -30,13 +30,12 @@ export default class SessionController {
 	 */
 	async store({ request, auth, response, session }: HttpContext) {
 		const { code, state } = request.all();
-		const internalState = session.pull("linkedin_auth_state");
+		const internalState = session.get("linkedin_auth_state");
 
+    console.log(code, state)
 		if (state !== internalState) {
 			return response.abort("Invalid session", 403);
 		}
-
-		// const user = await User.findByOrFail({ state: state });
 
 		const form = new URLSearchParams();
 		form.append("grant_type", "authorization_code");
@@ -57,6 +56,7 @@ export default class SessionController {
 		};
 
 		const userInfo = await getUserInfo(data.access_token);
+    console.log(userInfo)
 		const user = (await User.findBy({ email: userInfo.email })) ?? new User();
 
 		user.email ??= userInfo.email;

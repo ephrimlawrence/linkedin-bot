@@ -9,7 +9,7 @@ import env from "#start/env";
  */
 export async function getUserInfo(accessToken: string) {
 	const resp = await fetch("https://api.linkedin.com/v2/userinfo", {
-		method: "POST",
+		method: "GET",
 		headers: {
 			Authorization: `Bearer ${accessToken}`,
 			"Content-Type": "application/json",
@@ -21,7 +21,6 @@ export async function getUserInfo(accessToken: string) {
 		email: string;
 	};
 
-	console.log(data);
 	return { email: data.email, fullName: data.name };
 }
 

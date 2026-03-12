@@ -5,8 +5,6 @@ type ParamValue = string | number | bigint | boolean
 export type ScannedRoutes = {
   ALL: {
     'home': { paramsTuple?: []; params?: {} }
-    'new_account.create': { paramsTuple?: []; params?: {} }
-    'new_account.store': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
     'session.store': { paramsTuple?: []; params?: {} }
     'topics.create': { paramsTuple?: []; params?: {} }
@@ -15,20 +13,17 @@ export type ScannedRoutes = {
   }
   GET: {
     'home': { paramsTuple?: []; params?: {} }
-    'new_account.create': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
     'session.store': { paramsTuple?: []; params?: {} }
     'topics.create': { paramsTuple?: []; params?: {} }
   }
   HEAD: {
     'home': { paramsTuple?: []; params?: {} }
-    'new_account.create': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
     'session.store': { paramsTuple?: []; params?: {} }
     'topics.create': { paramsTuple?: []; params?: {} }
   }
   POST: {
-    'new_account.store': { paramsTuple?: []; params?: {} }
     'topics.store': { paramsTuple?: []; params?: {} }
     'session.destroy': { paramsTuple?: []; params?: {} }
   }
