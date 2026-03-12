@@ -52,11 +52,6 @@ export default class SessionController {
 		user.accessToken = data.access_token;
 		await user.save();
 
-		console.log(user);
-		// await session.put("isLoggedIn", true);
-
-		// 	const user = await User.verifyCredentials(email, password);
-
 		await auth.use("web").login(user);
 		response.redirect().toRoute("home");
 	}
