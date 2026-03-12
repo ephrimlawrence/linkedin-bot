@@ -59,6 +59,7 @@ export default class SessionController {
 
 		user.email ??= userInfo.email;
 		user.fullName ??= userInfo.fullName;
+		user.linkedinId = userInfo.sub;
 		user.accessToken = data.access_token;
 		await user.save();
 

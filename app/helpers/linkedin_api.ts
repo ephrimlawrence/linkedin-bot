@@ -19,9 +19,10 @@ export async function getUserInfo(accessToken: string) {
 	const data = (await resp.json()) as {
 		name: string;
 		email: string;
+		sub: string;
 	};
 
-	return { email: data.email, fullName: data.name };
+	return { email: data.email, fullName: data.name, sub: data.sub };
 }
 
 export async function createPost(opts: { user: User; topic: UserTopic }) {
@@ -38,7 +39,7 @@ export async function createPost(opts: { user: User; topic: UserTopic }) {
 					{
 						parts: [
 							{
-								text: `Create a post on the topic '${opts.topic.name}' that will be posted on LinkedIn. Must be concise and straight to the point. Add a bit of humor for engagement.`,
+								text: `Create a post on the topic '${opts.topic.name}' that will be posted on LinkedIn. Must be concise and straight to the point. Add a bit of humor for engagement. Do not use markdown formatting, return raw text + emoji (where appropriate)`,
 							},
 						],
 					},
@@ -47,10 +48,10 @@ export async function createPost(opts: { user: User; topic: UserTopic }) {
 		},
 	);
 
-	const geminiData = ((await geminiResponse.json()) as any).candidates[0]
+	const postText = ((await geminiResponse.json()) as any).candidates[0]
 		.content.parts[0].text;
 
-	console.log(geminiData);
+	// console.log(geminiData);
 
 	const response = await fetch("https://api.linkedin.com/rest/posts", {
 		method: "POST",
@@ -58,11 +59,12 @@ export async function createPost(opts: { user: User; topic: UserTopic }) {
 			Authorization: `Bearer ${opts.user.accessToken}`,
 			"X-Restli-Protocol-Version": "2.0.0",
 			"Linkedin-Version": "202601",
-			"Content-Type": "application/json",
+			// "Content-Type": "application/json",
 		},
 		body: JSON.stringify({
+        "author": `urn:li:person:${opts.user.linkedinId}`,
 			// author: "urn:li:organization:5515715",
-			commentary: "Sample text Post",
+			commentary: postText,
 			visibility: "PUBLIC",
 			distribution: {
 				feedDistribution: "MAIN_FEED",
@@ -74,7 +76,7 @@ export async function createPost(opts: { user: User; topic: UserTopic }) {
 		}),
 	});
 
-	const data = await response.json();
+	const data = await response.text();
 	console.log(data);
 	return data;
 }

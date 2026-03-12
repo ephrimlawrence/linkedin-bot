@@ -10,6 +10,7 @@ export default class extends BaseSchema {
 			table.string("email", 254).nullable().unique();
 			// table.string("password").notNullable();
 			table.text("access_token");
+			table.text("linkedin_id");
 			// table.text("state");
 			table.timestamp("created_at").notNullable();
 			table.timestamp("updated_at").nullable();
