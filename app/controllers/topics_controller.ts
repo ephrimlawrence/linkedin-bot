@@ -1,5 +1,6 @@
 // import type { HttpContext } from '@adonisjs/core/http'
 
+import UserTopic from "#models/user_topic";
 import { HttpContext } from "@adonisjs/core/http";
 
 export default class TopicsController {
@@ -67,6 +68,10 @@ export default class TopicsController {
 
 	async store({ request, auth, response, session }: HttpContext) {
 		const { topic } = request.all();
+		for (const name of topic) {
+			await UserTopic.create({ userId: auth.user?.id, name: name });
+		}
+
 		console.log(topic);
 
 		return response.json({ working: true });

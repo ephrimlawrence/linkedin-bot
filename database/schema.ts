@@ -22,6 +22,21 @@ export class LinkedInAccessTokenSchema extends BaseModel {
   declare updatedAt: DateTime | null
 }
 
+export class UserTopicSchema extends BaseModel {
+  static $columns = ['createdAt', 'id', 'name', 'updatedAt', 'userId'] as const
+  $columns = UserTopicSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare name: string | null
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+  @column()
+  declare userId: number
+}
+
 export class UserSchema extends BaseModel {
   static $columns = ['accessToken', 'createdAt', 'id', 'state', 'updatedAt'] as const
   $columns = UserSchema.$columns
