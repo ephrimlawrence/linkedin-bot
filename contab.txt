@@ -1,0 +1,1 @@
+0 0 * * * cd /path/to/your/adonisjs/project && node ace linkedin:poster

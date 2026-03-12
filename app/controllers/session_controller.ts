@@ -61,6 +61,7 @@ export default class SessionController {
 		user.fullName ??= userInfo.fullName;
 		user.linkedinId = userInfo.sub;
 		user.accessToken = data.access_token;
+    user.tokenExpiresAt = data.expires_in
 		await user.save();
 
 		await auth.use("web").login(user);
