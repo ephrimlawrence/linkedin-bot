@@ -7,19 +7,32 @@
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 
-export class UserSchema extends BaseModel {
-  static $columns = ['createdAt', 'email', 'fullName', 'id', 'password', 'updatedAt'] as const
-  $columns = UserSchema.$columns
+export class LinkedInAccessTokenSchema extends BaseModel {
+  static $columns = ['createdAt', 'id', 'state', 'token', 'updatedAt'] as const
+  $columns = LinkedInAccessTokenSchema.$columns
   @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
-  @column()
-  declare email: string
-  @column()
-  declare fullName: string | null
+  declare createdAt: DateTime | null
   @column({ isPrimary: true })
   declare id: number
-  @column({ serializeAs: null })
-  declare password: string
+  @column()
+  declare state: string | null
+  @column()
+  declare token: string | null
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class UserSchema extends BaseModel {
+  static $columns = ['accessToken', 'createdAt', 'id', 'state', 'updatedAt'] as const
+  $columns = UserSchema.$columns
+  @column()
+  declare accessToken: string | null
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare state: string | null
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
 }

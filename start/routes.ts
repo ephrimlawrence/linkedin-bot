@@ -19,7 +19,7 @@ router
     router.post('signup', [controllers.NewAccount, 'store'])
 
     router.get('login', [controllers.Session, 'create'])
-    router.post('login', [controllers.Session, 'store'])
+    router.get('oauth-redirect', [controllers.Session, 'store'])
   })
   .use(middleware.guest())
 

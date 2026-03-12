@@ -14,11 +14,11 @@ export default class User extends compose(UserSchema, withAuthFinder(hash)) {
    * Returns the first letter of first and last name if available,
    * otherwise returns the first two characters of the email username.
    */
-  get initials() {
-    const [first, last] = this.fullName ? this.fullName.split(' ') : this.email.split('@')
-    if (first && last) {
-      return `${first.charAt(0)}${last.charAt(0)}`.toUpperCase()
-    }
-    return `${first.slice(0, 2)}`.toUpperCase()
-  }
+  // get initials() {
+  //   const [first, last] = this.fullName ? this.fullName.split(' ') : this.email.split('@')
+  //   if (first && last) {
+  //     return `${first.charAt(0)}${last.charAt(0)}`.toUpperCase()
+  //   }
+  //   return `${first.slice(0, 2)}`.toUpperCase()
+  // }
 }

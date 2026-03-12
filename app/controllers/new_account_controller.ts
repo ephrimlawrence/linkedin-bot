@@ -19,10 +19,10 @@ export default class NewAccountController {
    * Create a new user account and authenticate the user
    */
   async store({ request, response, auth }: HttpContext) {
-    const payload = await request.validateUsing(signupValidator)
-    const user = await User.create({ ...payload })
+    // const payload = await request.validateUsing(signupValidator)
+    // const user = await User.create({ ...payload })
 
-    await auth.use('web').login(user)
-    response.redirect().toRoute('home')
+    // await auth.use('web').login(user)
+    // response.redirect().toRoute('home')
   }
 }
