@@ -56,15 +56,20 @@ export default class SessionController {
 
 		const userInfo = await getUserInfo(data.access_token);
 		const user = (await User.findBy({ email: userInfo.email })) ?? new User();
+		const isNew = user.email != null;
 
 		user.email ??= userInfo.email;
 		user.fullName ??= userInfo.fullName;
 		user.linkedinId = userInfo.sub;
 		user.accessToken = data.access_token;
-    user.tokenExpiresAt = data.expires_in
+		user.tokenExpiresAt = data.expires_in;
 		await user.save();
 
 		await auth.use("web").login(user);
+
+		if (isNew) {
+			return response.redirect().toRoute("topics");
+		}
 		response.redirect().toRoute("home");
 	}
 

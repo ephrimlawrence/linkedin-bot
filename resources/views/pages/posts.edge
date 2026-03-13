@@ -1,0 +1,15 @@
+@layout()
+  <div class="hero">
+    <h1>My LinkedIn Posts</h1>
+    <a href="/topics">Don't have topics? Choose topic</a>
+
+    <div class="row">
+      @each(post in posts)
+        <div class="col-md-4">
+          <div class="card">
+            <p>{{ post.content }}</p>
+          </div>
+        </div>
+      @end
+    </div>
+@end

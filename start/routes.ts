@@ -20,10 +20,18 @@ router
 	})
 	.use(middleware.guest());
 
-router.group(() => {
-	router.get("topics", [controllers.Topics, "create"]);
-	router.post("topics", [controllers.Topics, "store"]);
-});
+router
+	.group(() => {
+		router.get("topics", [controllers.Topics, "create"]).as("topics");
+		router.post("topics", [controllers.Topics, "store"]);
+	})
+	.use(middleware.auth());
+
+router
+	.group(() => {
+		router.get("posts", [controllers.Posts, "index"]).as("posts");
+	})
+	.use(middleware.auth());
 
 router
 	.group(() => {

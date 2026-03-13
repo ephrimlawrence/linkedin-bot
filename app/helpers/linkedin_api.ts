@@ -29,11 +29,11 @@ export async function getUserInfo(accessToken: string) {
 export async function createPost(opts: { user: User; topic: UserTopic }) {
 	const { topic, user } = opts;
 
-	if (user.tokenExpiresAt != null && user.tokenExpiresAt <= Date.now()) {
-		console.log("Access token has expired, please refereh token!");
-		// await refreshToken(user)
-		return false;
-	}
+	// if (user.tokenExpiresAt != null && user.tokenExpiresAt <= Date.now()) {
+	// 	console.log("Access token has expired, please refereh token!");
+	// 	// await refreshToken(user)
+	// 	return false;
+	// }
 
 	const geminiResponse = await fetch(
 		"https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent",

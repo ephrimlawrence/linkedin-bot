@@ -4,6 +4,7 @@
  */
 
 export const controllers = {
+  Posts: () => import('#controllers/posts_controller'),
   Session: () => import('#controllers/session_controller'),
   Topics: () => import('#controllers/topics_controller'),
 }

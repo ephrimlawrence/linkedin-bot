@@ -4,7 +4,7 @@
     <p>A super fast & simple LinkedIn bot for automated post </p>
 
     @if(!auth.user)
-      @!link({ route: 'session.create', text: 'Login' })
+      @!link({ route: 'session.create', text: 'Login', classes: ["btn btn-primary"] })
     @end
   </div>
 

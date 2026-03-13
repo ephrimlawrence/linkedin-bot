@@ -67,17 +67,20 @@ export default class TopicsController {
 		return view.render("pages/topics", { topics: topics });
 	}
 
-	async store({ request, auth, response, session }: HttpContext) {
-		const { topic } = request.all();
+	async store({ request, auth, response }: HttpContext) {
+		const { topic, days } = request.all();
 		let t: UserTopic;
 
 		for (const name of topic) {
-			t = await UserTopic.create({ userId: auth.user?.id, name: name });
+			t = await UserTopic.create({
+				userId: auth.user?.id,
+				name: name,
+				days: JSON.stringify(days),
+			});
 		}
 
 		await createPost({ user: auth.user!, topic: t! });
 
-		// TODO: implement gemini API & linkedlin post
-		return response.json({ working: true });
+		response.redirect().toRoute("posts");
 	}
 }

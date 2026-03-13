@@ -7,21 +7,24 @@ export type ScannedRoutes = {
     'home': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
     'session.store': { paramsTuple?: []; params?: {} }
-    'topics.create': { paramsTuple?: []; params?: {} }
+    'topics': { paramsTuple?: []; params?: {} }
     'topics.store': { paramsTuple?: []; params?: {} }
+    'posts': { paramsTuple?: []; params?: {} }
     'session.destroy': { paramsTuple?: []; params?: {} }
   }
   GET: {
     'home': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
     'session.store': { paramsTuple?: []; params?: {} }
-    'topics.create': { paramsTuple?: []; params?: {} }
+    'topics': { paramsTuple?: []; params?: {} }
+    'posts': { paramsTuple?: []; params?: {} }
   }
   HEAD: {
     'home': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
     'session.store': { paramsTuple?: []; params?: {} }
-    'topics.create': { paramsTuple?: []; params?: {} }
+    'topics': { paramsTuple?: []; params?: {} }
+    'posts': { paramsTuple?: []; params?: {} }
   }
   POST: {
     'topics.store': { paramsTuple?: []; params?: {} }
