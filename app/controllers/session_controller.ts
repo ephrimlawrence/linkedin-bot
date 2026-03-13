@@ -56,7 +56,7 @@ export default class SessionController {
 
 		const userInfo = await getUserInfo(data.access_token);
 		const user = (await User.findBy({ email: userInfo.email })) ?? new User();
-		const isNew = user.email != null;
+		const isNew = user.email == null;
 
 		user.email ??= userInfo.email;
 		user.fullName ??= userInfo.fullName;
@@ -70,7 +70,8 @@ export default class SessionController {
 		if (isNew) {
 			return response.redirect().toRoute("topics");
 		}
-		response.redirect().toRoute("home");
+
+		return response.redirect().toRoute("posts");
 	}
 
 	/**

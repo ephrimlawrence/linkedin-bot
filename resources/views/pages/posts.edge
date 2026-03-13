@@ -3,14 +3,15 @@
     <h1 class="my-2">My LinkedIn Posts</h1>
     <a href="/topics">Don't have topics? Choose topic</a>
 
-    <div class="row my-3">
-      @each(post in posts)
-        <div class="col-md-4">
+      <div class="row row-cols-1 row-cols-md-4 g-4">
+        @each(post in posts)
+        <div class="col">
           <div class="card">
-          <div class="card-body">
-            <p class="card-text">{{ post.content }}</p>
-            <hr>
-            <h6 class="card-subtitle mb-2 text-body-secondary">#{{ post.topic.name }}</h6>
+            <div class="card-body">
+              <p class="card-text">{{ post.content }}</p>
+              <hr>
+              <h6 class="card-subtitle mb-2 text-body-secondary">#{{ post.topic.name }}</h6>
+            </div>
           </div>
         </div>
       @end
