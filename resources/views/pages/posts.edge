@@ -1,13 +1,16 @@
 @layout()
-  <div class="hero">
-    <h1>My LinkedIn Posts</h1>
+  <div class="container">
+    <h1 class="my-2">My LinkedIn Posts</h1>
     <a href="/topics">Don't have topics? Choose topic</a>
 
-    <div class="row">
+    <div class="row my-3">
       @each(post in posts)
         <div class="col-md-4">
           <div class="card">
-            <p>{{ post.content }}</p>
+          <div class="card-body">
+            <p class="card-text">{{ post.content }}</p>
+            <hr>
+            <h6 class="card-subtitle mb-2 text-body-secondary">#{{ post.topic.name }}</h6>
           </div>
         </div>
       @end
