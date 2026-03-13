@@ -7,20 +7,6 @@
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 
-export class LinkedInAccessTokenSchema extends BaseModel {
-  static $columns = ['createdAt', 'id', 'state', 'token', 'updatedAt'] as const
-  $columns = LinkedInAccessTokenSchema.$columns
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime | null
-  @column({ isPrimary: true })
-  declare id: number
-  @column()
-  declare state: string | null
-  @column()
-  declare token: string | null
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime | null
-}
 
 export class PostSchema extends BaseModel {
   static $columns = ['content', 'createdAt', 'id', 'topicId', 'updatedAt'] as const
