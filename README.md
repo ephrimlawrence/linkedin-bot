@@ -64,6 +64,26 @@ Follow these steps to setup a LinkedIn:
 6. Restart the server, if already running
 
 
-## Application
+## Application Walkthrough
 
 Access the application on [http://localhost:3333](http://localhost:3333).
+
+On the home page, click on the **Login** button to sign in with a LinkedIn Account. After signing, it redirects the user to choose topics and days of the week to post on LinkedIn.
+
+All LinkedIn posts can be viewed on the [posts page](http://localhost:3333/posts).
+
+![Blog Posts](./docs/posts.png)
+
+## Cron Job: Automated Posts
+
+The application uses cron job run automated posts. By default, the cron job is executed 6am each day.
+
+Update `crontab.txt` with the full page to the project directory. Execute the commands below to enable the cron job.
+
+```sh
+crontab crontab.txt
+crontab -l
+```
+
+
+## Architecture
