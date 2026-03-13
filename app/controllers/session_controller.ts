@@ -39,8 +39,8 @@ export default class SessionController {
 		const form = new URLSearchParams();
 		form.append("grant_type", "authorization_code");
 		form.append("code", code);
-		form.append("client_id", process.env.LINKEDIN_CLIENT_ID!);
-		form.append("client_secret", process.env.LINKEDIN_CLIEN_SECRET!);
+		form.append("client_id", env.get("LINKEDIN_CLIENT_ID"));
+		form.append("client_secret", env.get("LINKEDIN_CLIENT_SECRET"));
 		form.append("redirect_uri", this.redirectUri);
 
 		const resp = await fetch("https://www.linkedin.com/oauth/v2/accessToken", {

@@ -26,7 +26,7 @@ export default await Env.create(new URL("../", import.meta.url), {
 	SESSION_DRIVER: Env.schema.enum(["cookie", "memory", "database"] as const),
 
 	// Linkedinn
-	LINKEDIN_CLIEN_SECRET: Env.schema.secret(),
+	LINKEDIN_CLIENT_SECRET: Env.schema.string(),
 	LINKEDIN_CLIENT_ID: Env.schema.string(),
 	GEMINI_API_KEY: Env.schema.string(),
 });
